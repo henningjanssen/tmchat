@@ -13,13 +13,21 @@
   },
   "logging":{
     "logfile":"log/tmchatdd.log",
-    "loglevel":"debug",
+    "log":{
+      "debug":false,
+      "error":true,
+      "fatal":true,
+      "info":true,
+      "other":true,
+      "warning":true
+    },
     "mail":"server@example.com",
     "notify":{
       "log_debug":false,
       "log_error":false,
       "log_fatal":true,
-      "log_information":false,
+      "log_info":false,
+      "log_other":true,
       "log_warning":false,
       "daemon_restart":false,
       "daemon_start":false,
