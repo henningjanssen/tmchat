@@ -3,5 +3,7 @@ doc/*.log
 doc/*.out
 doc/*.pdf
 doc/*.toc
-
 src/conf/
+dev
+src/dev
+src/conf/dev
