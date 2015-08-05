@@ -12,7 +12,7 @@
     "pem_pass":""
   },
   "logging":{
-    "logfile":"log/tmschatd.log",
+    "logfile":"log/tmchatd.log",
     "loglevel":"warn",
     "mail":"server@example.com",
     "notify":{

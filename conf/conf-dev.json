@@ -1,0 +1,29 @@
+{
+  "processtitle":"tmchatdd",
+  "connection":{
+    "max_threads":4,
+    "max_connections":20000,
+    "timeout":20,
+    "allow_noop":true,
+    "max_noop":0,
+    "hostname":"127.0.0.1",
+    "port":7346,
+    "pem_file":"data/ssl/chatd.pem",
+    "pem_pass":""
+  },
+  "logging":{
+    "logfile":"log/tmchatdd.log",
+    "loglevel":"debug",
+    "mail":"server@example.com",
+    "notify":{
+      "log_debug":false,
+      "log_error":false,
+      "log_fatal":true,
+      "log_information":false,
+      "log_warning":false,
+      "daemon_restart":false,
+      "daemon_start":false,
+      "daemon_stop":true
+    }
+  }
+}
