@@ -1,0 +1,5 @@
+doc/*.aux
+doc/*.log
+doc/*.out
+doc/*.pdf
+doc/*.toc
