@@ -1,6 +1,7 @@
 
 std:
-	@echo "Nothing happend."
+	rm -R -f php/
+	h2tp src/ php/
 
 confdoc:
 	pdflatex -output-directory=doc doc/conf.tex
