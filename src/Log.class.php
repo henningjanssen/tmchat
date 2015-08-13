@@ -2,7 +2,7 @@
   class Log{
     public static $logconf = null;
     public static function resetConf(){
-      Log::$logconf = array(
+      self::$logconf = array(
         "logfile" => "log/tmchatd.log",
         "log" => array(
           "debug" => false,
@@ -26,17 +26,17 @@
         )
       );
     }
-    public static function _log(
+    public static function level(
       $level, $topic, $message, $uid = "unknown", $log = null, $notify = null
     ){
-      if(Log::$logconf == null){
-        Log::resetConf();
+      if(self::$logconf == null){
+        self::resetConf();
       }
       if($notify === null){
-        $notify = Log::$logconf["notify"]["other"];
+        $notify = self::$logconf["notify"]["other"];
       }
       if($log === null){
-        $notify = Log::$logconf["log"]["other"];
+        $notify = self::$logconf["log"]["other"];
       }
       $msg = "[".date("d.m.Y H:i:s", time())."]"
         ." - [$topic]"
@@ -45,50 +45,50 @@
         ."\n";
 
       if($log){
-        error_log($msg, 3, realpath(Log::$logconf["logpath"]));
+        error_log($msg, 3, realpath(self::$logconf["logpath"]));
       }
       if($notify){
         mail(
-          Log::$logconf["mail"],
+          self::$logconf["mail"],
           "tmchat encountered new _ $level _ ($topic)",
           $msg,
-          "From: ".Log::$logconf["mail"]."\r\n"
+          "From: ".self::$logconf["mail"]."\r\n"
         );
       }
     }
     public static function d($topic, $message, $uid = "unknown"){
-      Log::log(
+      self::level(
         "debug",$topic, $message, $uid,
-        Log::$logconf["log"]["debug"],
-        Log::$logconf["notify"]["debug"]
+        self::$logconf["log"]["debug"],
+        self::$logconf["notify"]["debug"]
       );
     }
     public static function e($topic, $message, $uid = "unknown"){
-      Log::log(
+      self::level(
         "error", $topic, $message, $uid,
-        Log::$logconf["log"]["error"],
-        Log::$logconf["notify"]["error"]
+        self::$logconf["log"]["error"],
+        self::$logconf["notify"]["error"]
       );
     }
     public static function f($topic, $message, $uid = "unknown"){
-      Log::log(
+      self::level(
         "fatal", $topic, $message, $uid,
-        Log::$logconf["log"]["fatal"],
-        Log::$logconf["notify"]["fatal"]
+        self::$logconf["log"]["fatal"],
+        self::$logconf["notify"]["fatal"]
       );
     }
     public static function i($topic, $message, $uid = "unknown"){
-      Log::log(
+      self::level(
         "info", $topic, $message, $uid,
-        Log::$logconf["log"]["info"],
-        Log::$logconf["notify"]["info"]
+        self::$logconf["log"]["info"],
+        self::$logconf["notify"]["info"]
       );
     }
     public static function w($topic, $message, $uid = "unknown"){
-      Log::log(
+      self::level(
         "warning", $topic, $message, $uid,
-        Log::$logconf["log"]["warning"],
-        Log::$logconf["notify"]["warning"]
+        self::$logconf["log"]["warning"],
+        self::$logconf["notify"]["warning"]
       );
     }
   }
