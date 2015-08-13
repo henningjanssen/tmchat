@@ -1,7 +1,9 @@
-<?php
+<?hh
   class Server{
     private $sock = null;
-    public function init($host, $port, $pem, $pempass){
+    public function __construct(
+      string $host, int $port, string $pem, string $pempass
+    ) : void {
       $context = stream_context_create();
       stream_context_set_option($context, "ssl", "local_cert", $pem);
       stream_context_set_option($context, "ssl", "passphrase", $pempass);
@@ -19,11 +21,11 @@
       stream_socket_enable_crypto($this->sock, false);
       stream_set_blocking($this->sock, 0);
     }
-    public function accept(){
+    public function accept() : void {
       $new = socket_accept($this->sock);
       return $new;
     }
-    public function __destruct(){
+    public function __destruct() : void{
       fclose($this->close());
     }
   }

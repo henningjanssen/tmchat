@@ -1,7 +1,7 @@
-<?php
+<?hh
   class Log{
     public static $logconf = null;
-    public static function resetConf(){
+    public static function resetConf() : void {
       self::$logconf = array(
         "logfile" => "log/tmchatd.log",
         "log" => array(
@@ -27,8 +27,9 @@
       );
     }
     public static function level(
-      $level, $topic, $message, $uid = "unknown", $log = null, $notify = null
-    ){
+      string $level,  string $topic, string $message,
+      ?int $uid = null, ?bool $log = null, ?bool $notify = null
+    ) : void {
       if(self::$logconf == null){
         self::resetConf();
       }
@@ -56,35 +57,45 @@
         );
       }
     }
-    public static function d($topic, $message, $uid = "unknown"){
+    public static function d(
+      string $topic, string $message, ?int $uid = null
+    ) : void {
       self::level(
         "debug",$topic, $message, $uid,
         self::$logconf["log"]["debug"],
         self::$logconf["notify"]["debug"]
       );
     }
-    public static function e($topic, $message, $uid = "unknown"){
+    public static function e(
+      string $topic, string $message, ?int $uid = null
+    ) : void {
       self::level(
         "error", $topic, $message, $uid,
         self::$logconf["log"]["error"],
         self::$logconf["notify"]["error"]
       );
     }
-    public static function f($topic, $message, $uid = "unknown"){
+    public static function f(
+      string $topic, string $message, ?int $uid = null
+    ) : void {
       self::level(
         "fatal", $topic, $message, $uid,
         self::$logconf["log"]["fatal"],
         self::$logconf["notify"]["fatal"]
       );
     }
-    public static function i($topic, $message, $uid = "unknown"){
+    public static function i(
+      string $topic, string $message, ?int $uid = null
+    ) : void {
       self::level(
         "info", $topic, $message, $uid,
         self::$logconf["log"]["info"],
         self::$logconf["notify"]["info"]
       );
     }
-    public static function w($topic, $message, $uid = "unknown"){
+    public static function w(
+      string $topic, string $message, ?int $uid = null
+    ) : void {
       self::level(
         "warning", $topic, $message, $uid,
         self::$logconf["log"]["warning"],

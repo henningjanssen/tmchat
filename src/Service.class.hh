@@ -1,10 +1,10 @@
-<?php
+<?hh
   require_once 'Server.class.php';
-  
+
   class Service{
     public static $run = true;
 
-    public static function run(){
+    public static function run() : void {
       //load configuration
       $conff = __DIR__."/conf/conf"
       .(file_exists(__DIR__."/dev")?"-dev":"")
@@ -20,8 +20,7 @@
       cli_set_process_title($jconf["processtitle"]);
 
       //open port and accept users
-      $server = new Server();
-      $server->init(
+      $server = new Server(
         $conf["connection"]["port"],
         $conf["connection"]["pem_file"],
         $conf["connection"]["pem_pass"]

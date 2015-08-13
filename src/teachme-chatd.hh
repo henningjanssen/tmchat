@@ -1,5 +1,5 @@
 #!/usr/bin/env php
-<?php
+<?hh
   require_once 'Service.class.php';
   function sig_handler($sig){
     switch($sig){
