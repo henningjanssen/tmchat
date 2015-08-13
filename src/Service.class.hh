@@ -2,9 +2,15 @@
   require_once 'Server.class.php';
 
   class Service{
-    public static $run = true;
+    private bool $run = false;
 
-    public static function run() : void {
+    public function stop() : void {
+      $this->run = false;
+    }
+
+    public function run() : void {
+      $this->run = true;
+
       //load configuration
       $conff = __DIR__."/conf/conf"
       .(file_exists(__DIR__."/dev")?"-dev":"")
@@ -26,14 +32,11 @@
         $conf["connection"]["pem_pass"]
       );
 
-      while(self::$run){
+      while($this->run){
         $new = false;
         do{
           $new = $server->accept();
-        } while($new !== false && Server::$run);
-        if(self::$run){
-          usleep(1200000); //1.2s
-        }
+        } while($new !== false && this->$run);
       }
     }
   }

@@ -22,4 +22,5 @@
   pcntl_signal(SIGTERM, "sig_handler");
   pcntl_signal(SIGHUP, "sig_handler");
 
-  Service::run();
+  $service = new Service();
+  $service->run();
