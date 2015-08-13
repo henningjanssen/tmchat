@@ -13,8 +13,8 @@
 
       //load configuration
       $conff = __DIR__."/conf/conf"
-      .(file_exists(__DIR__."/dev")?"-dev":"")
-      .".json";
+        .(file_exists(__DIR__."/dev")?"-dev":"")
+        .".json";
       if(!file_exists($conff)){
         echo "fatal: config-file not found: $conff";
       }
