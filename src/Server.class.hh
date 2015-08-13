@@ -21,7 +21,7 @@
       stream_socket_enable_crypto($this->sock, false);
       stream_set_blocking($this->sock, 0);
     }
-    public function accept() : void {
+    public function accept() : ?int {//Changed to some class later. placeholder
       $new = socket_accept($this->sock);
       return $new;
     }

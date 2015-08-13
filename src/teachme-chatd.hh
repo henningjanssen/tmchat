@@ -4,13 +4,13 @@
   function sig_handler($sig){
     switch($sig){
       case SIGKILL:
-      case SIGTERM:
-        Service::$run = false;
-      break;
+      case SIGTERM: {
+        $GLOBALS["service"]->stop();
+      } break;
 
-      case SIGHUB:
+      case SIGHUB: {
         //do restart
-      break;
+      } break;
     }
   }
 

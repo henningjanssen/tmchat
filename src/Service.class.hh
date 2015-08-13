@@ -27,6 +27,7 @@
 
       //open port and accept users
       $server = new Server(
+        $conf["cinnection"]["host"],
         $conf["connection"]["port"],
         $conf["connection"]["pem_file"],
         $conf["connection"]["pem_pass"]
@@ -36,7 +37,7 @@
         $new = false;
         do{
           $new = $server->accept();
-        } while($new !== false && this->$run);
+        } while($new !== null && $this->run);
       }
     }
   }
