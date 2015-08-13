@@ -25,7 +25,7 @@
       $new = socket_accept($this->sock);
       return $new;
     }
-    public function __destruct() : void{
-      fclose($this->close());
+    public function __destruct() : void {
+      fclose($this->sock);
     }
   }
