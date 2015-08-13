@@ -1,7 +1,9 @@
 
-std:
-	rm -R -f php/
+translate: clean
 	h2tp src/ php/
+
+clean:
+	rm -R -f php/
 
 confdoc:
 	pdflatex -output-directory=doc doc/conf.tex
