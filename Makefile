@@ -1,6 +1,17 @@
 
+full: translate addshebang
+
 translate: clean
 	h2tp src/ php/
+
+addshebang:
+	rm _tmp -R -f
+	mkdir _tmp
+	cat php/teachme-chatd.php >> _tmp/teachme-chatd.php
+	rm php/teachme-chatd.php
+	(echo "#/usr/bin/env php"; cat _tmp/teachme-chatd.php)\
+	  >> php/teachme-chatd.php
+	rm _tmp -R -f
 
 clean:
 	rm -R -f php/
