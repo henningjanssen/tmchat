@@ -1,5 +1,6 @@
 
 full: translate addshebang
+	rm php/.hhconfig
 
 translate: clean
 	h2tp src/ php/
