@@ -27,7 +27,7 @@
 
       //open port and accept users
       $server = new Server(
-        $conf["cinnection"]["host"],
+        $conf["connection"]["host"],
         $conf["connection"]["port"],
         $conf["connection"]["pem_file"],
         $conf["connection"]["pem_pass"]
