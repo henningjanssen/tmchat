@@ -1,7 +1,8 @@
-<?hh
-  require_once 'Server.class.php';
+<?hh // strict
+  require_once 'Server.class.hh';
+  require_once 'Singleton.class.hh';
 
-  class Service{
+  class Service extends Singleton {
     private bool $run = false;
 
     public function stop() : void {
@@ -20,10 +21,6 @@
       }
       $jconf = file_get_contents($conff);
       $conf = json_decode($jconf, true);
-      unset($jconf);
-
-      //set process title
-      cli_set_process_title($jconf["processtitle"]);
 
       //open port and accept users
       $server = new Server(

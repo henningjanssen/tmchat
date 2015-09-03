@@ -1,14 +1,14 @@
-#!/usr/bin/env php
-<?hh
-  require_once 'Service.class.php';
-  function sig_handler($sig){
+#!/usr/bin/env hhvm
+<?hh // partial
+  require_once 'Service.class.hh';
+  function sig_handler(int $sig): void {
     switch($sig){
       case SIGKILL:
       case SIGTERM: {
         $GLOBALS["service"]->stop();
       } break;
 
-      case SIGHUB: {
+      case SIGHUP: {
         //do restart
       } break;
     }
@@ -22,5 +22,5 @@
   pcntl_signal(SIGTERM, "sig_handler");
   pcntl_signal(SIGHUP, "sig_handler");
 
-  $service = new Service();
+  $service = Service::getInstance();
   $service->run();

@@ -1,9 +1,9 @@
-<?hh
+<?hh // strict
   class Server {
-    private $sock = null;
+    private ?resource $sock = null;
     public function __construct(
       string $host, int $port, string $pem, string $pempass
-    ): void {
+    ) {
       $context = stream_context_create();
       stream_context_set_option($context, "ssl", "local_cert", $pem);
       stream_context_set_option($context, "ssl", "passphrase", $pempass);
@@ -12,14 +12,18 @@
 
       $errmsg = null;
       $errno = null;
-      $this->sock = stream_socket_server(
+      $tmpsock = stream_socket_server(
         "tcp://$host:$port",
         $errno,
         $errmsg,
         STREAM_SERVER_BIND|STREAM_SERVER_LISTEN,
         $context
       );
-      //TODO: handle errors
+      if($tmpsock === false){
+        Log::f("Sock", "Not able to create socket");
+        throw new RuntimeException();
+      }
+      $this->sock = $tmpsock;
       stream_socket_enable_crypto($this->sock, false);
       stream_set_blocking($this->sock, 0);
     }

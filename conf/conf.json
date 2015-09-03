@@ -1,5 +1,4 @@
 {
-  "processtitle":"tmchatd",
   "connection":{
     "max_threads":4,
     "max_connections":20000,
