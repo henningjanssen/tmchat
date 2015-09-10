@@ -25,11 +25,10 @@
       }
       $this->sock = $tmpsock;
       stream_socket_enable_crypto($this->sock, false);
-      stream_set_blocking($this->sock, 0);
+      stream_set_blocking($this->sock, 1);
     }
-    public function accept(): mixed {//Changed to some class later. placeholder
-      $new = socket_accept($this->sock);
-      return $new;
+    public async function accept(): Awaitable<resource> {
+      return socket_accept($this->sock);
     }
     public function __destruct(): void {
       fclose($this->sock);

@@ -1,4 +1,5 @@
 <?hh // strict
+  require_once 'Client.class.hh';
   require_once 'Server.class.hh';
   require_once 'Singleton.class.hh';
 
@@ -29,12 +30,25 @@
         $conf["connection"]["pem_file"],
         $conf["connection"]["pem_pass"]
       );
+      $clientContainer = new ClientContainer(
+        $conf["connection"]["max_clients"]
+      );
+      $atrium = new NewConnectionManager(
+        $clientContainer,
+        $conf["connection"]["timeout"]
+      );
+      $new = $server->accept()->getWaitHandle();
+      $counter = 0;
 
       while($this->run){
-        $new = false;
-        do{
-          $new = $server->accept();
-        } while($new !== null && $this->run);
+        if($new->isFinished()){
+          $atrium->handle($new->join());
+          $new = $server->accept()->getWaitHandle();
+        }
+        $clientContainer->next();
+        $messages = $clientContainer->current()->handleConnections();
+        $clientContainer->spreadMessages($messages);
+        usleep(200);
       }
     }
   }

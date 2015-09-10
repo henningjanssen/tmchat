@@ -1,7 +1,6 @@
 {
   "connection":{
-    "max_threads":4,
-    "max_connections":20000,
+    "max_clients":20000,
     "timeout":20,
     "allow_noop":true,
     "max_noop":0,
