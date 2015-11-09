@@ -1,16 +1,12 @@
 <?hh // strict
+  require_once 'Connection.class.hh';
   require_once 'Message.class.hh';
+  require_once 'exceptions/ClientRejectedException.class.hh';
   require_once 'exceptions/InvalidIDException.class.hh';
-  require_once 'shapes/ParseMessageResult.shape.hh';
-
-  type Socket = shape (
-    'sock' => resource,
-    'timeout' => int
-  );
 
   class Client{
     private int $id;
-    private Vector<Socket> $socks = Vector{};
+    private Vector<Connection> $connections = Vector{};
 
     public function __construct(int $id, private int $timeout) {
       if($id <= 0){
@@ -19,59 +15,76 @@
       $this->id = $id;
     }
 
-    public function addConnection(resource $sock): void {
-      //TODO: check if alive
-      $this->socks[] = shape(
-        'sock' => $sock,
-        'timeout' => time() + $this->timeout,
-      );
+    public function addSock(resource $sock): void {
+      //TODO: dynamic version
+      $this->connections[] = new Connection($sock, $this->timeout, "1.0.0");
+    }
+
+    public function addConnection(Connection $connection): void {
+      if($connection->isAlive()){
+        $this->connections[] = $connection;
+      }
     }
 
     public function getConnectionCount(): int {
-      return $this->socks->count();
+      return $this->connections->count();
     }
 
     public function getID(): int {
       return $this->id;
     }
 
-    public function getSocks(): ImmVector<Socket> {
-      return $this->socks->toImmVector();
+    public function getConnections(): ImmVector<Connection> {
+      return $this->connections->toImmVector();
     }
 
     public function handleConnections(): Vector<Message> {
-      $messages = Vector{};
-      //TODO: iterate through connections and handle their messages.
-      //TODO: respond
-      //TODO: rm connections that timeouted
-      throw new Exception("unimplemented");
-      foreach($this->socks->keys() as $k){
-        $this->socks[$k]['timeout'] = time() + $this->timeout;
+      $messages = Map{};
+      $msgVector = Vector{};
+      $rm = Vector{};
+      foreach($this->connections->keys() as $k){
+        $this->connections[$k]->update();
+        if(!$this->connections[$k]->isAlive()){
+          continue;
+        }
+        $messages[$k] = $this->connections[$k]->getMessages();
       }
-      return $messages;
+      foreach($messages->keys() as $mk){
+        foreach($this->connections->keys() as $ck){
+          if($mk != $ck){
+            $this->connections[$ck]->notify($messages[$mk]);
+          }
+          //TODO: improve efficiency
+          foreach($messages[$mk] as $sm){
+            if(!$sm->getRecipients()->isEmpty()){
+              $msgVector[] = $sm;
+            }
+          }
+        }
+      }
+      $this->connections = $this->connections->filter(
+        $conn ==> $conn->isAlive()
+      );
+
+      return $msgVector;
     }
 
     public function isAlive(): bool {
-      return !($this->socks->isEmpty());
+      return !($this->connections->isEmpty());
     }
 
     public function merge(Client $client): void {
-      foreach($client->getSocks() as $sock){
-        $this->addConnection($sock['sock']);
+      if($client->getID() !== $this->id){
+        throw new InvalidIDException("IDs don't match");
+      }
+      foreach($client->getConnections() as $conn){
+        $this->addConnection($conn);
       }
     }
 
     public function notify(Vector<Message> $messages): void {
-      $sends = Vector{};
-      throw new Exception("unimplemented");
-      foreach($messages as $msg){
-        $sends[] = $msg->getSendableString();
-      }
-      foreach($this->socks as $sock){
-        foreach($sends as $send){
-          fwrite($sock, $send);
-          //TODO: get answer and stuff
-        }
+      foreach($this->connections as $conn){
+        $conn->notify($messages);
       }
     }
   }

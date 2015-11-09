@@ -7,7 +7,7 @@
   require_once 'exceptions/RessourcesExceededException.class.hh';
 
   class ClientContainer implements Iterator<Client> {
-    private Vector<Client> $clients = Vector{};
+    private Map<int, Client> $clients = Map{};
     private int $maxConnections;
     private int $iteratorPosition = 0;
 
