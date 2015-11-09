@@ -47,7 +47,7 @@
         if(!$v->isAlive()){
           continue;
         }
-        $messages[$k] = $this->connections[$k]->getMessages();
+        $messages[$k] = $v->getMessages();
       }
       foreach($messages->keys() as $mk){
         foreach($this->connections->keys() as $ck){
