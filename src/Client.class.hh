@@ -42,9 +42,9 @@
       $messages = Map{};
       $msgVector = Vector{};
       $rm = Vector{};
-      foreach($this->connections->keys() as $k){
-        $this->connections[$k]->update();
-        if(!$this->connections[$k]->isAlive()){
+      foreach($this->connections as $k => $v){
+        $v->update();
+        if(!$v->isAlive()){
           continue;
         }
         $messages[$k] = $this->connections[$k]->getMessages();
