@@ -51,8 +51,7 @@ class Connection {
     socket_clear_error($this->socket);
     if($read !== ''){
       $messages = MessageHandler::parse($read);
-      MessageHandler::execute($messages);
-      $ans = MessageHandler::generateAnswer($messages);
+      list($messages, $ans) = MessageHandler::execute($messages);
       socket_write($this->socket, $ans);
 
       //TODO: check write-errors

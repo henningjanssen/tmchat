@@ -1,0 +1,20 @@
+{
+  "/login/mail":{
+    "minParamCount":2,
+    "requiredKeys":["user", "password"],
+    "replaceKeys":{"0":"user", "1":"password"},
+    "optionals":{}
+  },
+  "/logout":{
+    "minParamCount":0,
+    "requiredKeys":[],
+    "replaceKeys":{},
+    "optionals":{}
+  },
+  "/ping":{
+    "minParamCount":0,
+    "requiredKeys":[],
+    "replaceKeys":{},
+    "optionals":{}
+  }
+}

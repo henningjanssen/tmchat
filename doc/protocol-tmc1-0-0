@@ -1,0 +1,17 @@
+<msg> = <cmd>{<space><param>}<null>
+<space> ::= {' '}+
+<cmd> ::= {<slash><wordnum>}+
+<cmd> = {path to a command, specified in command-list, f.e. chat/send}
+<null> ::= '\0'
+<slash> ::= '/'
+<wordnum> ::= [a-z0-9]+
+<letters> ::= {<wordnum>*<space>*{sonderzeichen}*<colon>*}*
+<param> ::= [<paramkey>]<paramvalue>|<paramkey>[<paramvalue>]
+<paramkey> ::= <wordnum><colon>
+<paramvalue> ::= <wordnum>|<parenthesisopen><letters><parenthesisclose>
+<parenthesisopen> ::= '\''
+<parenthesisclose> ::= '\''
+<colon> ::= ':'
+<param> = {parameter as specified in command-list, style like irc}
+
+/some/path/to/a/command param param param (param with spaces)\0

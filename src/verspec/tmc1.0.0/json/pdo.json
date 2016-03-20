@@ -1,0 +1,9 @@
+{
+  "/login":{
+    "stmt":"some login-stmt %__placeholder__%",
+    "values":[
+      {"pdokey":"user", "msgkey":"user", "type":"string"},
+      {"pdokey":"password", "msgkey":"password", "type":"string"}
+    ]
+  }
+}

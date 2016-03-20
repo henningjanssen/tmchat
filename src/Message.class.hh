@@ -4,6 +4,32 @@
   class Message {
     private Map<string, string> $notifications = Map{};
     private Vector<int> $recipients = Vector{};
+    private int $error = 0;
+    private string $errstr = "";
+    private string $answer = "";
+
+    public function __construct(
+      private string $rawcmd, private Map<string, string> $params){}
+
+    public function setAnswer(string $answ): void {
+      $this->answer = $answ;
+    }
+
+    public function getAnswer(): string {
+      return $this->answer;
+    }
+
+    public function getRawCmd(): string {
+      return $this->rawcmd;
+    }
+
+    public function invalidate(int $error, string $errstr): void {
+      $this->error = $error;
+      $this->errstr = $errstr;
+    }
+    public function valid(): bool {
+      return $this->error === 0 || $this->error === 200;
+    }
 
     public function setRecipients(Vector<int> $rec): void {
       $this->recipients = $rec;
