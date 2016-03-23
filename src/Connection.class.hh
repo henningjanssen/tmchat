@@ -7,12 +7,12 @@ class Connection {
   private int $timeout;
   private Vector<Message> $pendingMsgs = Vector{};
   public function __construct(
-    private resource $socket, private int $ttl, private string $version
+    private resource $socket, private int $ttl, private string $protocol
   ){
-    if(!is_dir(__DIR__."/verspec/$version/")){
-      throw new ClientRejectedException("Unknown Protocol $version");
+    if(!is_dir(__DIR__."/verspec/$protocol/")){
+      throw new ClientRejectedException("Unknown Protocol $protocol");
     }
-    require_once __DIR__."/verspec/$version/MessageHandler.class.hh";
+    require_once __DIR__."/verspec/$protocol/MessageHandler.class.hh";
     $this->timeout = time() + $ttl;
     $this->update(); //invalidates if necessary
   }
