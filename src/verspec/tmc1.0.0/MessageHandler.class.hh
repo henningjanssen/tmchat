@@ -38,11 +38,14 @@
         try{
           $ex = new Executor($msg);
           $msg = $ex->execute();
-          $answer .= $msg->getSendableString()."\0";
         }
         catch(NotAvailableException $naex){
           $msg->invalidate(421, $naex->getMessage());
         }
+        catch(ClientRejectedException $crex){ // roooaaar
+          $msg->invalidate(10001, $crex->getMessage());
+        }
+        $answer .= $msg->getSendableString()."\0";
       }
       return list($msgs, $answer);
     }

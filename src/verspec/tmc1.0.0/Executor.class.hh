@@ -17,7 +17,7 @@
       }
       else{
         throw new NotAvailableException(
-          "Command ".$this->msg->getRawCmd()." does not exist"
+          "Command ".$this->msg->getRawCmd()." does not exist", 501
         );
       }
     }

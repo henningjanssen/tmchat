@@ -18,13 +18,14 @@
       }
       $id = -1;
       $protocol = "";
+      $answer = "";
       try{
         list($protocol, $answer, $id) = $this->login($read);
-        socket_write($sock, $answer);
       }
-      catch(ClientRejectedException $crex){ // t-rex smaller brother
-        socket_write($sock, $crex->getMessage());
+      catch(InvalidMessageException $crex){ // t-rex smaller brother
+        $answer = "505 ".$crex->getMessage()."\0";
       }
+      socket_write($sock, $answer);
       $client = new Client($id, $this->timeout);
       $client->addSock($sock, $protocol);
       $this->container->add($client);
@@ -37,7 +38,7 @@
       $params = "/login/$method ".implode(" ",array_slice($params, 2));
 
       if(!is_dir(__DIR__."/verspec/$protocol/")){
-        throw new ClientRejectedException("Unknown Protocol $protocol");
+        throw new InvalidMessageException("Unknown Protocol $protocol");
       }
       require_once __DIR__."/verspec/$protocol/MessageHandler.class.hh";
 
