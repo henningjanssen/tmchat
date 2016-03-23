@@ -8,3 +8,4 @@ dev
 src/dev
 src/conf/dev
 _tmp/
+vendor/
