@@ -1,4 +1,7 @@
 {
   "name":"Chat-Server",
-  "description":"Chat-Server"
+  "description":"Chat-Server",
+  "require":{
+    "facebook/php-sdk-v4":"~5.0"
+  }
 }

@@ -1,7 +1,9 @@
-<?hh // strict
+<?hh // partial
 
   require_once __DIR__."/CommandInfo.class.hh";
+  require_once __DIR__."/../../LibConf.class.hh";
   require_once __DIR__."/../../Message.class.hh";
+  require_once __DIR__."/../../../vendor/autoload.php";
 
   class Executor{
     public function __construct(private Message $msg){}
@@ -38,6 +40,47 @@
         === $result[$pdoinfo["values"]["password"]["dbkey"]]
       ){
         throw new ClientRejectedException("Wrong password");
+      }
+      $this->msg->setAnswer(json_encode($result));
+      return $this->msg;
+    }
+
+    private function _login_fb(): Message {
+      $pdoinfo = CommandInfo::getPDOInfo("/login/fb");
+      $accessToken = intval($this->msg->getParams()["accessToken"]);
+      $fbConf = LibConfiguration::getConf("facebook");
+
+      $fb = new Facebook(array(
+        "appID" => $fbConf["appID"],
+        "secret" => $fbConf["appSecret"]
+      ));
+      $fb->setAccessToken($accessToken);
+
+      if(!$fb->getUser()){
+        throw new ClientRejectedException(
+          "Failed to get facebook-user"
+        );
+      }
+      $fbUser = null;
+      try{
+        $fbUser = $fb->api("/me", "GET");
+      }
+      catch(Exception $ex){
+        throw new ClientRejectedException(
+          "Failed to access facebook-profile",
+          10001, $ex
+        );
+      }
+      $stmt = PDOController::getInstance()->getStatement($pdoinfo["stmt"]);
+      $stmt->bindValue(
+        $pdoinfo["values"]["fbid"]["dbkey"],
+        $accessToken,
+        self::getPDOType($pdoinfo["values"]["fbid"]["type"])
+      );
+      $stmt->execute();
+      $result = $stmt->fetch(PDO::FETCH_ASSOC);
+      if($result->rowCount() !== 1){
+        throw new ClientRejectedException("User does not exist");
       }
       $this->msg->setAnswer(json_encode($result));
       return $this->msg;

@@ -25,17 +25,19 @@
   "/login/fb":{
     "minParamCount":3,
     "requiredKeys":[
-      "fbAuthToken",
+      "authToken",
       "client",
       "clientVersion"
     ],
     "replaceKeys":{
-      "0":"fbAuthToken",
+      "0":"authToken",
       "1":"client",
       "2":"clientVersion",
       "3":"os",
       "4":"osVersion",
-      "5":"deviceToken"
+      "5":"deviceToken",
+      "at":"accessToken",
+      "accessToken":"authToken"
     },
     "optionals":{
       "client":"unknown",

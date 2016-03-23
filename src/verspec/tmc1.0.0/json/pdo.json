@@ -10,5 +10,13 @@
         "dbkey":"password", "type":"string"
       }
     }
+  },
+  "/login/fb":{
+    "stmt":"SELECT * FROM `Users` WHERE `fbID` LIKE :fbid",
+    "values":{
+      "fbid":{
+        "pdokey":":fbid", "msgkey":"", "dbkey":"fbID", "type":"int"
+      }
+    }
   }
 }
