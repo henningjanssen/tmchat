@@ -1,17 +1,9 @@
 <?hh // strict
 
+  require_once __DIR__."/PDOInfo.shape.hh";
   require_once __DIR__
     .'/../../exceptions/FatalConfigurationExceptions.class.hh';
 
-  type PDOInfo = shape(
-    'stmt' => string,
-    'values' => Map<string, shape(
-        "pdokey" => string,
-        "msgkey" => string,
-        "dbkey" => string,
-        "type" => string
-      )>
-  );
   type ParamInfo = shape(
     'minParamCount' => int,
     'requiredKeys' => Vector<string>,
