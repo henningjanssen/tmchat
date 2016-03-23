@@ -56,13 +56,13 @@
       }
     }
 
-    private static function loadInfo(string $dir): string{
-      if(!file_exists(__DIR__."/$dir")){
+    private static function loadInfo(string $file): string{
+      if(!file_exists(__DIR__."/$file")){
         throw new FatalConfigurationException(
-          "File not found: ".__DIR__."/$dir"
+          "File not found: ".__DIR__."/$file"
         );
       }
-      $filec = file_get_contents(__DIR__."/$dir");
+      $filec = file_get_contents(__DIR__."/$file");
       return $filec;
     }
 
