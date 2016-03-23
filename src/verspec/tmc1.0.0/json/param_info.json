@@ -10,7 +10,9 @@
       "1":"password",
       "2":"client",
       "3":"clientVersion",
-      "4":"deviceToken"
+      "4":"os",
+      "5":"osVersion",
+      "6":"deviceToken"
     },
     "optionals":{
       "client":"unknown",
@@ -31,9 +33,15 @@
       "0":"fbAuthToken",
       "1":"client",
       "2":"clientVersion",
-      "3":"deviceToken"
+      "3":"os",
+      "4":"osVersion",
+      "5":"deviceToken"
     },
     "optionals":{
+      "client":"unknown",
+      "clientVersion":"0.0.0",
+      "os":"unknown",
+      "osVersion":"0.0.0",
       "deviceToken":""
     }
   }
