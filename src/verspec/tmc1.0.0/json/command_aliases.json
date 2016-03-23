@@ -1,3 +1,5 @@
 {
-  "/login":"/login/mail"
+  "/login":"/login/mail",
+  "/login/intern":"/login/mail",
+  "/login/facebook":"/login/fb"
 }

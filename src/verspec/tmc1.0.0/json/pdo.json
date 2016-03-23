@@ -1,9 +1,14 @@
 {
   "/login":{
-    "stmt":"some login-stmt %__placeholder__%",
-    "values":[
-      {"pdokey":"user", "msgkey":"user", "type":"string"},
-      {"pdokey":"password", "msgkey":"password", "type":"string"}
-    ]
+    "stmt":"SELECT * FROM `Users` WHERE `mail` LIKE :user",
+    "values":{
+      "user":{
+        "pdokey":":user", "msgkey":"user", "dbkey":"user", "type":"string"
+      },
+      "password":{
+        "pdokey":":password", "msgkey":"password",
+        "dbkey":"password", "type":"string"
+      }
+    }
   }
 }

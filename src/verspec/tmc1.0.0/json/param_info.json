@@ -1,10 +1,42 @@
 {
   "/login/mail":{
     "minParamCount":2,
-    "requiredKeys":["user", "password"],
-    "replaceKeys":{"0":"user", "1":"password"},
-    "optionals":{}
+    "requiredKeys":[
+      "user",
+      "password"
+    ],
+    "replaceKeys":{
+      "0":"user",
+      "1":"password",
+      "2":"client",
+      "3":"clientVersion",
+      "4":"deviceToken"
+    },
+    "optionals":{
+      "client":"unknown",
+      "clientVersion":"0.0.0",
+      "os":"unknown",
+      "osVersion":"0.0.0",
+      "deviceToken":""
+    }
   },
+  "/login/fb":{
+    "minParamCount":3,
+    "requiredKeys":[
+      "fbAuthToken",
+      "client",
+      "clientVersion"
+    ],
+    "replaceKeys":{
+      "0":"fbAuthToken",
+      "1":"client",
+      "2":"clientVersion",
+      "3":"deviceToken"
+    },
+    "optionals":{
+      "deviceToken":""
+    }
+  }
   "/logout":{
     "minParamCount":0,
     "requiredKeys":[],

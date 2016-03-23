@@ -5,9 +5,10 @@
 
   type PDOInfo = shape(
     'stmt' => string,
-    'values' => Vector<shape(
+    'values' => Map<string, shape(
         "pdokey" => string,
         "msgkey" => string,
+        "dbkey" => string,
         "type" => string
       )>
   );
