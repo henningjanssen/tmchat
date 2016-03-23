@@ -9,6 +9,11 @@
     "pem_file":"data/ssl/chatd.pem",
     "pem_pass":""
   },
+  "pdo":{
+    "dns":"",
+    "user":"",
+    "password":""
+  },
   "logging":{
     "logfile":"log/tmchatd.log",
     "log":{

@@ -1,5 +1,6 @@
 <?hh // strict
   require_once 'Client.class.hh';
+  require_once 'PDOController.class.hh';
   require_once 'Server.class.hh';
   require_once 'Singleton.class.hh';
 
@@ -37,6 +38,7 @@
         $clientContainer,
         $conf["connection"]["timeout"]
       );
+      PDOController::getInstance()->setSettings($conf["pdo"]);
       $new = $server->accept()->getWaitHandle();
       $counter = 0;
 
