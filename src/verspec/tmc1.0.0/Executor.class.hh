@@ -25,7 +25,8 @@
       $stmt = PDOController::getInstance()->getStatement($pdoinfo["stmt"]);
       $stmt->bindValue(
         $pdoinfo["values"]["user"]["pdokey"],
-        $this->msg->getParams()[$pdoinfo["values"]["user"]["msgkey"]]
+        $this->msg->getParams()[$pdoinfo["values"]["user"]["msgkey"]],
+        self::getPDOType($pdoinfo["values"]["user"]["type"])
       );
       $stmt->execute();
       $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -45,5 +46,41 @@
     private function _ping(): Message {
       $this->msg->setAnswer("pong\0");
       return $this->msg;
+    }
+
+    private static function getPDOType(string $typename): int{
+      switch(strtolower($typename)){
+        case "bool":
+          return PDO::PARAM_BOOL;
+          break;
+
+        case "int":
+          return PDO::PARAM_INT;
+          break;
+
+        case "null":
+          return PDO::PARAM_NULL;
+          break;
+
+        case "string":
+          return PDO::PARAM_STR;
+          break;
+
+        case "lob":
+          return PDO::PARAM_LOB;
+          break;
+
+        case "stmt":
+          return PDO::PARAM_STMT;
+          break;
+
+        case "input-output":
+          return PDO::PARAM_INPUT_OUTPUT;
+          break;
+
+        default:
+          Log::e("tmc1.0.0: Executor::getType", "Unknown type $typename");
+          throw new FatalConfigurationException("Unknown type $typename");
+      }
     }
   }
