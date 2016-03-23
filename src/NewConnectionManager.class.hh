@@ -19,7 +19,7 @@
       $id = -1;
       $protocol = "";
       try{
-        list($protocol, $answer, $id) = login($read);
+        list($protocol, $answer, $id) = $this->login($read);
         socket_write($sock, $answer);
       }
       catch(ClientRejectedException $crex){ // t-rex smaller brother
@@ -30,7 +30,7 @@
       $this->container->add($client);
     }
 
-    public function login(string $msg): (string, string, int){
+    private function login(string $msg): (string, string, int){
       $params = explode(" ",str_replace("  ", " ", $msg));
       $protocol = $params[0];
       $method = $params[1];
@@ -44,6 +44,6 @@
       $message = MessageHandler::parse($params);
       list($message, $answer) = MessageHandler::execute($message);
       $jsonAnswer = json_decode($answer);
-      return list($protocol, $answer, intval($jsonAnswer["id"]));
+      return tuple($protocol, $answer, intval($jsonAnswer["id"]));
     }
   }

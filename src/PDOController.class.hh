@@ -30,6 +30,7 @@ class PDOController extends Singleton{
       );
       $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
+    invariant($this->pdo !== null, "pdo variable is null");
     return $this->pdo;
   }
 
