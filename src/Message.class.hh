@@ -44,8 +44,7 @@
     }
 
     public function getSendableString(): string {
-      throw new Exception("unimplemented");
-      return "";
+      return $this->error." ".$this->errstr."\n".$this->answer;
     }
 
     public function getNotification(string $version): string {

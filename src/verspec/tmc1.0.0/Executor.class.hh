@@ -41,6 +41,7 @@
       ){
         throw new ClientRejectedException("Wrong password");
       }
+      $this->msg->invalidate(200, "OK");
       $this->msg->setAnswer(json_encode($result));
       return $this->msg;
     }
@@ -82,11 +83,13 @@
       if($result->rowCount() !== 1){
         throw new ClientRejectedException("User does not exist");
       }
+      $this->msg->invalidate(200, "OK");
       $this->msg->setAnswer(json_encode($result));
       return $this->msg;
     }
 
     private function _ping(): Message {
+      $this->msg->invalidate(200, "OK");
       $this->msg->setAnswer("pong\0");
       return $this->msg;
     }

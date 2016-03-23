@@ -38,7 +38,7 @@
         try{
           $ex = new Executor($msg);
           $msg = $ex->execute();
-          $answer .= $msg->getAnswer();
+          $answer .= $msg->getSendableString()."\0";
         }
         catch(NotAvailableException $naex){
           $msg->invalidate(421, $naex->getMessage());
