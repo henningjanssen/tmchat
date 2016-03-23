@@ -66,7 +66,6 @@
     }
 
     public static function getClosingMessage(): string {
-      //TODO: real message
-      return "";
+      return "10002 Closing Connection";
     }
   }

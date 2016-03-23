@@ -1,0 +1,6 @@
+<msg> = <protocol><space><loginmethod><space><login-params><null>
+
+<protocol> ::= 'tmc1.0.0'
+<loginmetod> ::= 'fb'|'facebook'|'mail'
+<space> ::= {' '}+
+<null> ::= '\0'

@@ -15,9 +15,8 @@
       $this->id = $id;
     }
 
-    public function addSock(resource $sock): void {
-      //TODO: dynamic version
-      $this->connections[] = new Connection($sock, $this->timeout, "1.0.0");
+    public function addSock(resource $sock, string $protocol): void {
+      $this->connections[] = new Connection($sock, $this->timeout, $protocol);
     }
 
     public function addConnection(Connection $connection): void {

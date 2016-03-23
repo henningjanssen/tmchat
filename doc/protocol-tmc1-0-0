@@ -1,4 +1,4 @@
-<msg> = <cmd>{<space><param>}<null>
+<msg> = <cmd>{<space><param>}+<null>
 <space> ::= {' '}+
 <cmd> ::= {<slash><wordnum>}+
 <cmd> = {path to a command, specified in command-list, f.e. chat/send}
@@ -14,4 +14,5 @@
 <colon> ::= ':'
 <param> = {parameter as specified in command-list, style like irc}
 
+example:
 /some/path/to/a/command param param param (param with spaces)\0

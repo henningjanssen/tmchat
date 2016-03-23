@@ -10,7 +10,7 @@ class Connection {
     private resource $socket, private int $ttl, private string $version
   ){
     if(!is_dir(__DIR__."/verspec/$version/")){
-      throw new ClientRejectedException("Unknown Version $version");
+      throw new ClientRejectedException("Unknown Protocol $version");
     }
     require_once __DIR__."/verspec/$version/MessageHandler.class.hh";
     $this->timeout = time() + $ttl;

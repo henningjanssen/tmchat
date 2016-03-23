@@ -1,5 +1,6 @@
-<?hh // strict
+<?hh // partial
   require_once 'ClientContainer.class.hh';
+  require_once __DIR__.'/exceptions/ClientRejectedException.class.hh';
 
   class NewConnectionManager {
     public function __construct(
@@ -7,8 +8,6 @@
     ){}
 
     public function handle(resource $sock): void {
-      throw new Exception("unimplemented");
-
       $read = "";
       while(true){
         $r = socket_read($sock, 512);
@@ -17,10 +16,34 @@
         }
         $read .= $r;
       }
-      //TODO: login-stuff
-      $id = 0; // TODO: replace with real user-id
+      $id = -1;
+      $protocol = "";
+      try{
+        list($protocol, $answer, $id) = login($read);
+        socket_write($sock, $answer);
+      }
+      catch(ClientRejectedException $crex){ // t-rex smaller brother
+        socket_write($sock, $crex->getMessage());
+      }
       $client = new Client($id, $this->timeout);
-      $client->addSock($sock);
+      $client->addSock($sock, $protocol);
       $this->container->add($client);
+    }
+
+    public function login(string $msg): (string, string, int){
+      $params = explode(" ",str_replace("  ", " ", $msg));
+      $protocol = $params[0];
+      $method = $params[1];
+      $params = "/login/$method ".implode(" ",array_slice($params, 2));
+
+      if(!is_dir(__DIR__."/verspec/$protocol/")){
+        throw new ClientRejectedException("Unknown Protocol $protocol");
+      }
+      require_once __DIR__."/verspec/$protocol/MessageHandler.class.hh";
+
+      $message = MessageHandler::parse($params);
+      list($message, $answer) = MessageHandler::execute($message);
+      $jsonAnswer = json_decode($answer);
+      return list($protocol, $answer, intval($jsonAnswer["id"]));
     }
   }

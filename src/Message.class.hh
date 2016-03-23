@@ -23,6 +23,10 @@
       return $this->rawcmd;
     }
 
+    public function getParams(): Map<string, string>{
+      return $this->params;
+    }
+
     public function invalidate(int $error, string $errstr): void {
       $this->error = $error;
       $this->errstr = $errstr;
