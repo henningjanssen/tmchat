@@ -8,10 +8,10 @@ translate: clean
 addshebang:
 	rm _tmp -R -f
 	mkdir _tmp
-	cat php/teachme-chatd.php >> _tmp/teachme-chatd.php
-	rm php/teachme-chatd.php
-	(echo "#/usr/bin/env php"; cat _tmp/teachme-chatd.php)\
-	  >> php/teachme-chatd.php
+	cat php/tm-chatd.php >> _tmp/tm-chatd.php
+	rm php/tm-chatd.php
+	(echo "#/usr/bin/env php"; cat _tmp/tm-chatd.php)\
+	  >> php/tm-chatd.php
 	rm _tmp -R -f
 
 clean:

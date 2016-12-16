@@ -1,4 +1,4 @@
-#TeachMe Chat-Server
+#TM Chat-Server
 
 ##Documentation
 Any documentation is provided as _tex_-files.
