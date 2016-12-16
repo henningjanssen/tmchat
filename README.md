@@ -1,3 +1,7 @@
+# Short story
+
+This project was meant to be a chat server for an old app-project including a chat-function. As this project was abandoned this chat-server has been finished and probably never will be. It was supposed to support multiple protocols but only one custom irc-like protocol has been half implemented. This server was meant to serve a small user-count. It is entirely written in Hack.
+
 #TM Chat-Server
 
 ##Documentation
